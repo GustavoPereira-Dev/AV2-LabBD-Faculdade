@@ -1,0 +1,64 @@
+/* Estilo para a tela inicial (splash screen) */
+.splash-screen {
+  background: url('../images/background-futebol.jpg') no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+}
+
+.splash-content {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  border-radius: 15px;
+}
+
+.splash-content h1 {
+  font-size: 3.5rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+/* Estilo para as cartas de escolha de time */
+.team-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.team-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.team-card img {
+  padding: 20px;
+  max-height: 200px;
+  object-fit: contain;
+}
+
+/* Estilo para a tela de curiosidade */
+.curiosity-container {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Container principal para centralizar conteúdo */
+.main-container {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+/* Estilo para o formulário de login de admin */
+.login-container {
+    max-width: 450px;
+    margin: 5rem auto;
+    padding: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
