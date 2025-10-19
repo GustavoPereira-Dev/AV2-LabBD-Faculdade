@@ -1,121 +1,87 @@
 package com.example.fateczl.AvaliacaoFaculdadeAV2.controller;
 
-import java.util.Map;
-
+import com.example.fateczl.AvaliacaoFaculdadeAV2.model.*;
+import com.example.fateczl.AvaliacaoFaculdadeAV2.repository.*;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class CadastraTipoController {
 
-//	@Autowired
-//	private ClienteDao cDao;
+    @Autowired private ICuriosidadeRepository curiosidadeRep;
+    @Autowired private ITimeRepository timeRep;
+    @Autowired private IAdministradorRepository administradorRep;
 
-	@RequestMapping(name = "cadastraTipo", value = "/cadastraTipo", method = RequestMethod.GET)
-	public ModelAndView cadastraTipoGet(
-			@RequestParam Map<String, String> 
-			params, 
-			ModelMap model) {
-//			String acao = params.get("acao");
-//			String cpf = params.get("cpf");
-//
-//			Cliente c = new Cliente();
-//			String erro = "";
-//			List<Cliente> clientes = new ArrayList<>();
-//
-//				try {
-//					if (acao != null) {
-//						c.setCpf(cpf);
-//
-//						if (acao.equalsIgnoreCase("excluir")) {
-//							cDao.excluir(c);
-//							clientes = cDao.listar();
-//							c = null;
-//						} else {
-//							c = cDao.buscar(c);
-//							clientes = null;
-//						}
-//					}
-//				} catch (SQLException | ClassNotFoundException e) {
-//					erro = e.getMessage();
-//				} finally {
-//					model.addAttribute("erro", erro);
-//					model.addAttribute("cliente", c);
-//					model.addAttribute("clientes", clientes);
-//				}
-			return new ModelAndView("cadastraTipo");
-	}
+    @GetMapping("admin/cadastraTipo")
+    public ModelAndView mensagensGet(ModelMap model, HttpSession session) {
+        if (session.getAttribute("admin") == null) { return new ModelAndView("redirect:/login"); }
 
-	@RequestMapping(name = "cadastraTipo", value = "/cadastraTipo", method = RequestMethod.POST)
-	public ModelAndView escolhaPost(
-			@RequestParam Map<String, String> params, 
-			ModelMap model) {
-		String saida = "";
-		String erro = "";
-//		List<Cliente> clientes = new ArrayList<Cliente>();
-//		Cliente c = new Cliente();
-//		String cmd = "";
-//
-//		try {
-//			String cpf = params.get("cpf");
-//			String nome = params.get("nome");
-//			String email = params.get("email");
-//			String limiteCredito = params.get("limite_credito");
-//			String nascimento = params.get("nascimento");
-//			cmd = params.get("botao");
-//
-//			if (!cmd.equalsIgnoreCase("Listar")) {
-//				c.setCpf(cpf);
-//			}
-//			if (cmd.equalsIgnoreCase("Inserir") || cmd.equalsIgnoreCase("Atualizar")) {
-//				c.setNome(nome);
-//				c.setEmail(email);
-//				c.setLimiteCredito(Float.parseFloat(limiteCredito));
-//				c.setDtNasc(LocalDate.parse(nascimento));
-//			}
-//
-//			if (cmd.equalsIgnoreCase("Inserir")) {
-//				saida = cDao.inserir(c);
-//			}
-//			if (cmd.equalsIgnoreCase("Atualizar")) {
-//				saida = cDao.atualizar(c);
-//			}
-//			if (cmd.equalsIgnoreCase("Excluir")) {
-//				saida = cDao.excluir(c);
-//			}
-//			if (cmd.equalsIgnoreCase("Buscar")) {
-//				c = cDao.buscar(c);
-//			}
-//			if (cmd.equalsIgnoreCase("Listar")) {
-//				System.out.println("Listando");
-//				clientes = cDao.listar();
-//			}
-//
-//		} catch (SQLException | ClassNotFoundException | NumberFormatException e) {
-//			saida = "";
-//			erro = e.getMessage();
-//			if (erro.contains("input string")) {
-//				erro = "Preencha os campos corretamente";
-//			}
-//		} finally {
-//			if (!cmd.equalsIgnoreCase("Buscar")) {
-//				c = null;
-//			}
-//			if (!cmd.equalsIgnoreCase("Listar")) {
-//				clientes = null;
-//			}
-//			
-//			model.addAttribute("erro", erro);
-//			model.addAttribute("saida", saida);
-//			model.addAttribute("cliente", c);
-//			model.addAttribute("clientes", clientes);
-//			
-//		}
+        model.addAttribute("listaMensagens", curiosidadeRep.findAll());
+        model.addAttribute("times", timeRep.findAll());
+        model.addAttribute("mensagem", new Curiosidade());
+        return new ModelAndView("cadastraTipo");
+    }
 
-		return new ModelAndView("cadastraTipo");
-	}
+    @GetMapping("/cadastraTipo")
+    public ModelAndView editarMensagemGet(@RequestParam Map<String, String> params, ModelMap model, HttpSession session) {
+    	
+    	String id = params.get("id");
+    	String time = params.get("timeId");
+    	String filtrar = params.get("filtrar");
+    	
+    	List<Curiosidade> curiosidades = new LinkedList<>();
+    	
+
+    	curiosidades = curiosidadeRep.findAll();
+    	
+        //if (session.getAttribute("admin") == null) { return new ModelAndView("redirect:/login"); }
+        
+    	model.addAttribute("listaMensagens", curiosidadeRep.findAll());
+
+    	
+    	
+        model.addAttribute("times", timeRep.findAll());
+        //curiosidadeRep.findById(id).ifPresent(c -> model.addAttribute("mensagem", c));
+        
+        return new ModelAndView("cadastraTipo");
+    }
+
+    @PostMapping("/cadastraTipo")
+    public ModelAndView salvarMensagem(@RequestParam Map<String, String> params, ModelMap model, HttpSession session) {
+        //if (session.getAttribute("admin") == null) { return new ModelAndView("redirect:/login"); }
+        String saida = "";
+        String erro = "";
+    	
+        String conteudo = params.get("conteudo");
+        String idTime = params.get("timeId");
+        
+        Curiosidade curiosidade = new Curiosidade();
+        
+        curiosidade.setAdministrador(administradorRep.getById(1l));
+        curiosidade.setConteudo(conteudo);
+        curiosidade.setTime(timeRep.getById(Long.parseLong(idTime)));
+        
+        
+        try {
+            curiosidadeRep.save(curiosidade);
+            saida = "Curiosidade adicionada com sucesso!";
+        } catch (Exception e) {
+        	erro = e.getMessage();
+            // ... Tratamento de erro ...
+        }
+        
+        System.out.println(saida + " " + erro);
+    	model.addAttribute("erro", erro);
+    	model.addAttribute("saida", saida);
+        
+        return new ModelAndView("cadastraTipo");
+    }
 }

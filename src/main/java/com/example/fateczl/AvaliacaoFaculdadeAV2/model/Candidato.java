@@ -1,6 +1,8 @@
 package com.example.fateczl.AvaliacaoFaculdadeAV2.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,17 +32,28 @@ public class Candidato {
     @Column(name = "bairro", length = 100, nullable = false)
     private String bairro;
 
-    @Column(name = "curso", length = 50, nullable = false)
-    private String curso;
-
     @Column(name = "data_cadastro", nullable = false)
     private LocalDateTime dataCadastro;
 
     @Column(name = "recebe_mensagem", nullable = false)
     private boolean recebeMensagem;
+
+    // Relacionamento: Muitos candidatos são consultados/registrados por um administrador
+    @ManyToOne(targetEntity = Curso.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "codigo_curso", nullable = false)
+    private Curso curso;
     
     // Relacionamento: Muitos candidatos são consultados/registrados por um administrador
     @ManyToOne(targetEntity = Administrador.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "codigo_adm", nullable = false)
+    @JoinColumn(name = "codigo_administrador", nullable = false)
     private Administrador administrador;
+    
+    public String getDataCadastroFormatada() {
+        if (this.dataCadastro == null) {
+            return "";
+        }
+        // Define o padrão de formatação desejado
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy 'às' HH:mm");
+        return this.dataCadastro.format(formatter);
+    }
 }

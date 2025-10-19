@@ -21,7 +21,7 @@
 		                </div>
 		                <div class="card-body p-4">
 		                    <p class="text-muted">Preencha seus dados para receber informações sobre nossos vestibulares e eventos.</p>
-		                    <form action="${pageContext.request.contextPath}/salvarCandidato" method="post">
+		                    <form action="autenticacao?auth=cadastro" method="post">
 		                        <div class="mb-3">
 		                            <label for="nome" class="form-label">Nome Completo</label>
 		                            <input type="text" class="form-control" id="nome" name="nome" required>
@@ -43,12 +43,12 @@
 		                            <select class="form-select" id="curso" name="cursoId" required>
 		                                <option selected disabled value="">Selecione um curso...</option>
 		                                <c:forEach var="curso" items="${cursos}">
-		                                    <option value="${curso.id}">${curso.nome} - ${curso.turno}</option>
+		                                    <option value="${curso.codigo}">${curso.nome}</option>
 		                                </c:forEach>
 		                            </select>
 		                        </div>
 		                        <div class="form-check mb-4">
-		                            <input class="form-check-input" type="checkbox" id="consentimento" checked disabled>
+		                            <input class="form-check-input" type="checkbox" id="consentimento" name="consentimento">
 		                            <label class="form-check-label" for="consentimento">
 		                                Ao me cadastrar, concordo em receber mensagens da Fatec ZL sobre o vestibular.
 		                            </label>
@@ -60,6 +60,16 @@
 		                </div>
 		            </div>
 		        </div>
+		        <div class="conteiner" align="center">
+					<c:if test="${not empty saida}">
+						<h2 style="color: blue;"><c:out value="${saida}" /></h2>
+					</c:if>
+				</div>
+				<div class="conteiner" align="center">
+					<c:if test="${not empty erro}">
+						<h2 style="color: red;"><c:out value="${erro}" /></h2>
+					</c:if>
+				</div>
 		    </div>
 		</div>
 		<div class="login-container">
@@ -71,16 +81,16 @@
 	            </div>
 	        </c:if>
 	
-	        <form action="${pageContext.request.contextPath}/admin/autenticar" method="post">
+	        <form action="autenticacao?auth=login" method="post">
 	            <input type="hidden" name="target" value="${param.target}">
 	            
 	            <div class="mb-3">
 	                <label for="login" class="form-label">Usuário</label>
-	                <input type="text" class="form-control" id="login" name="login" required>
+	                <input type="text" class="form-control" id="usuario" name="usuario" required>
 	            </div>
 	            <div class="mb-3">
 	                <label for="senha" class="form-label">Senha</label>
-	                <input type="password" class="form-control" id="senha" name="senha" required>
+	                <input type="password" class="form-control" id="email" name="email" required>
 	            </div>
 	            <div class="d-grid mt-4">
 	                <button type="submit" class="btn btn-dark">Entrar</button>

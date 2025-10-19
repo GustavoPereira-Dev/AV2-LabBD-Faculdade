@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 
 <%-- A URL de redirecionamento pode ser passada pelo controller --%>
 <c:set var="redirectUrl" value="autenticacao" />
@@ -21,11 +22,11 @@
 <div class="container curiosity-container text-center">
     <div class="card text-center w-75">
         <div class="card-header">
-            <h3>Oráculo do ${curiosidade.time.nome}</h3>
+            <h3>Oráculo do ${timeNome}</h3>
         </div>
         <div class="card-body">
             <blockquote class="blockquote mb-0">
-                <p class="fs-4">"${curiosidade.texto}"</p>
+                <p class="fs-4">"${conteudoCuriosidade}"</p>
                 <footer class="blockquote-footer mt-3">Uma inspiração para o seu futuro!</footer>
             </blockquote>
         </div>

@@ -14,11 +14,9 @@ import lombok.NoArgsConstructor;
 public class Historico {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo", nullable = false)
     private long codigo;
-
-    @Column(name = "data_adicao", nullable = true)
-    private LocalDateTime dataAdicao;
     
     // Relacionamento: O histórico se refere a uma curiosidade
     @ManyToOne(targetEntity = Curiosidade.class, fetch = FetchType.LAZY)

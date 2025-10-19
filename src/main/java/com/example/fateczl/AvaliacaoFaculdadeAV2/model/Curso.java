@@ -16,13 +16,10 @@ import lombok.NoArgsConstructor;
 public class Curso {
 	
 	@Id
-	@Column(name = "id", nullable = false)
+	@Column(name = "codigo", nullable = false)
 	long codigo;
 	
 	@Column(name = "nome", nullable = false)
 	String nome;
-	
-	@Column(name = "turno", nullable = false)
-	String turno;
-	
+
 }
