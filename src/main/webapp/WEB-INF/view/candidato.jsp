@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<c:set var="tituloPagina" value="Meu Painel" scope="request"/>
-<jsp:include page="header.jsp" />
+	<c:set var="tituloPagina" value="Cadastre-se" scope="request"/>
+	<c:set var="imagem" value="dashboard.jpg" scope="request"/>
+	<jsp:include page="header.jsp" />
 
 <div class="container main-container">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -66,22 +67,6 @@
                 </div>
             </div>
         </div>
-
-        <c:if test="${not empty ultimaCuriosidade}">
-            <div class="col-12">
-                <div class="card text-center">
-                    <div class="card-header">
-                        <i class="bi bi-star-fill"></i> Sua Mensagem do Oráculo
-                    </div>
-                    <div class="card-body">
-                        <blockquote class="blockquote mb-0">
-                            <p class="fs-5">"${ultimaCuriosidade}"</p>
-                            <footer class="blockquote-footer mt-2">Uma lembrança do nosso evento!</footer>
-                        </blockquote>
-                    </div>
-                </div>
-            </div>
-        </c:if>
     </div>
 </div>
 

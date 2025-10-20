@@ -23,11 +23,9 @@ public class Administrador {
     @Column(name = "senha", length = 10, nullable = false)
     private String senha;
 
-    // Relacionamento bidirecional: Um administrador pode criar várias curiosidades
     @OneToMany(mappedBy = "administrador", fetch = FetchType.LAZY)
     private List<Curiosidade> curiosidadesCriadas;
     
-    // Relacionamento bidirecional: Um administrador pode consultar vários candidatos
     @OneToMany(mappedBy = "administrador", fetch = FetchType.LAZY)
     private List<Candidato> candidatosConsultados;
 }

@@ -22,7 +22,7 @@ INSERT INTO Curso VALUES
 (3, 'Desenvolvimento de Produtos Plasticos'),
 (4,	'Desenvolvimento de Software Multiplataforma'),
 (5, 'Gestao de Recursos Humanos'),
-(6, 'Polimeros'),
+(6, 'Gestao Empresarial'),
 (7, 'Logistica'),
 (8, 'Polimeros'),
 (9, 'AMS')

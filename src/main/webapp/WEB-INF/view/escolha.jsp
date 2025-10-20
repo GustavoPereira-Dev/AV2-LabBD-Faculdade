@@ -3,13 +3,10 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-</head>
-<body>
 	<c:set var="tituloPagina" value="Escolha seu Time" scope="request"/>
+	<c:set var="imagem" value="choice.png" scope="request"/>
 	<jsp:include page="header.jsp" />
-		
+<body>
 	<div class="container main-container text-center">
 	    <h2 class="mb-4">Para qual time você torce?</h2>
 	    <p class="lead mb-5">Clique no seu time para receber uma mensagem especial!</p>

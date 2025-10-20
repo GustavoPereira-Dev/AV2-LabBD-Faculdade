@@ -14,11 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Controller
 public class AutenticacaoController {
@@ -28,28 +26,21 @@ public class AutenticacaoController {
     @Autowired
     private ICursoRepository cursoRep;
     
-    /**
-     * Exibe a página de autenticação do candidato.
-     * O seu JSP 'autenticacao.jsp' parece ter um formulário de cadastro e um de login.
-     * Este método simplesmente exibe essa página.
-     */
     @GetMapping("/autenticacao")
     public ModelAndView autenticacaoGet(@RequestParam Map<String, String> params, HttpSession session) {
+    	String auth = params.get("auth");
+    	
     	List<Curso> cursos = new LinkedList<>();
     	
     	cursos = cursoRep.findAll();
     	
     	session.setAttribute("cursos",cursos);
+    	session.setAttribute("auth",auth);
         return new ModelAndView("autenticacao");
     }
-
-    /**
-     * Processa a tentativa de login do CANDIDATO.
-     * O formulário de login na autenticacao.jsp deve ter action="autenticarCandidato".
-     */
+    
     @PostMapping("/autenticacao")
     public ModelAndView autenticarCandidato(@RequestParam Map<String, String> params, ModelMap model, HttpSession session) {
-        // Supondo que o login do candidato é por email e senha
     	String saida = "";
     	String erro = "";
     	String url = "";
@@ -60,8 +51,6 @@ public class AutenticacaoController {
     	String auth = params.get("auth");
     	
     	String consentimento = params.get("consentimento");
-    	
-    	System.out.println(consentimento);
     	
     	Candidato candidato = new Candidato();
     	
@@ -79,8 +68,6 @@ public class AutenticacaoController {
         		saida = candidatoRep.sp_login_candidato(usuario, email);
         	}
         	candidato = candidatoRep.findByNome(usuario);
-        	
-
         	url = "candidato";
     	} catch(Exception e) {
     		url = "autenticacao";

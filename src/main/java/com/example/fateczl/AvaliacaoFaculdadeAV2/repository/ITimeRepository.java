@@ -6,4 +6,6 @@ import com.example.fateczl.AvaliacaoFaculdadeAV2.model.Time;
 
 public interface ITimeRepository extends JpaRepository<Time, Long> {
 
+	Time findByCodigo(long codigo);
+	
 }

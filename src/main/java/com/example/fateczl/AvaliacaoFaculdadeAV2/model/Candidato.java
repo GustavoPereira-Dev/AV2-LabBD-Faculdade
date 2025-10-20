@@ -38,7 +38,7 @@ public class Candidato {
     @Column(name = "recebe_mensagem", nullable = false)
     private boolean recebeMensagem;
 
-    // Relacionamento: Muitos candidatos são consultados/registrados por um administrador
+    // Relacionamento: Muitos candidatos procuram por um curso específico
     @ManyToOne(targetEntity = Curso.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "codigo_curso", nullable = false)
     private Curso curso;

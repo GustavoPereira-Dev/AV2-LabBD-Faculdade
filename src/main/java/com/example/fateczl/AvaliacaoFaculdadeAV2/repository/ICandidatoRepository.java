@@ -20,7 +20,7 @@ public interface ICandidatoRepository extends JpaRepository<Candidato, Long> {
 
     // Requisito: "consultar candidatos por bairro"
     // SELECT * FROM Candidato WHERE bairro = ?
-    List<Candidato> findByBairro(String bairro);
+    List<Candidato> findByBairroContaining(String bairro);
 
 
     // Requisito: "consultar todos os candidatos com ordenação por curso escolhido"

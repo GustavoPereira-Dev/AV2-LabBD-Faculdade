@@ -1,6 +1,5 @@
 package com.example.fateczl.AvaliacaoFaculdadeAV2.model;
 
-import java.time.LocalDateTime;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

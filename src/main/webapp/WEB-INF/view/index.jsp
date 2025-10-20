@@ -5,8 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="icon" href="/people.jpg">
+<title>Oráculo</title>
+<link rel="icon" href="${pageContext.request.contextPath}/images/index.png">
 </head>
 <body>
 	<c:set var="tituloPagina" value="Bem-vindo ao Evento Fatec ZL!" scope="request"/>

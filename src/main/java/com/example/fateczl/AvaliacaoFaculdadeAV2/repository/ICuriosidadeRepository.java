@@ -4,12 +4,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
-import org.hibernate.annotations.NamedNativeQuery;
+
+import java.util.List;
 
 import com.example.fateczl.AvaliacaoFaculdadeAV2.model.Curiosidade;
 
 public interface ICuriosidadeRepository extends JpaRepository<Curiosidade, Long> {
 
+	@Query("SELECT c FROM Curiosidade c WHERE c.time.codigo = :codigoDoTime")
+    List<Curiosidade> buscarPorCodigoDoTime(@Param("codigoDoTime") Long codigoDoTime);
+	 
 	@Query(value = "SELECT dbo.fn_verifica_curiosidades() AS bit")
 	public boolean verificaCuriosidades();
 	 

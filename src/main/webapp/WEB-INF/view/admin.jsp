@@ -3,10 +3,9 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+	<c:set var="tituloPagina" value="Admin" scope="request"/>
+	<c:set var="imagem" value="admin.jpg" scope="request"/>
+	<jsp:include page="header.jsp" />
 <body>
 	<c:set var="tituloPagina" value="Painel Administrativo" scope="request"/>
 	<jsp:include page="header.jsp" />

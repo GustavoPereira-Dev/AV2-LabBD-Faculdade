@@ -3,10 +3,9 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+	<c:set var="tituloPagina" value="Admin - Consulta de Candidatos" scope="request"/>
+	<c:set var="imagem" value="candidate.jpg" scope="request"/>
+	<jsp:include page="header.jsp" />
 <body>
 	<c:set var="tituloPagina" value="Admin - Consulta de Candidatos" scope="request"/>
 	<jsp:include page="header.jsp" />

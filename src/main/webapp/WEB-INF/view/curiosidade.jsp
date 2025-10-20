@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sua Curiosidade!</title>
     <meta http-equiv="refresh" content="15;url=${redirectUrl}">
-    
+    <link rel="icon" href="${pageContext.request.contextPath}/images/curiosity.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>

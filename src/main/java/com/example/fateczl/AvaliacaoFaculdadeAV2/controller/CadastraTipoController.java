@@ -20,67 +20,47 @@ public class CadastraTipoController {
     @Autowired private ITimeRepository timeRep;
     @Autowired private IAdministradorRepository administradorRep;
 
-    @GetMapping("admin/cadastraTipo")
-    public ModelAndView mensagensGet(ModelMap model, HttpSession session) {
-        if (session.getAttribute("admin") == null) { return new ModelAndView("redirect:/login"); }
-
-        model.addAttribute("listaMensagens", curiosidadeRep.findAll());
-        model.addAttribute("times", timeRep.findAll());
-        model.addAttribute("mensagem", new Curiosidade());
-        return new ModelAndView("cadastraTipo");
-    }
-
     @GetMapping("/cadastraTipo")
     public ModelAndView editarMensagemGet(@RequestParam Map<String, String> params, ModelMap model, HttpSession session) {
-    	
-    	String id = params.get("id");
-    	String time = params.get("timeId");
-    	String filtrar = params.get("filtrar");
-    	
-    	List<Curiosidade> curiosidades = new LinkedList<>();
-    	
-
-    	curiosidades = curiosidadeRep.findAll();
-    	
-        //if (session.getAttribute("admin") == null) { return new ModelAndView("redirect:/login"); }
-        
     	model.addAttribute("listaMensagens", curiosidadeRep.findAll());
-
-    	
-    	
         model.addAttribute("times", timeRep.findAll());
-        //curiosidadeRep.findById(id).ifPresent(c -> model.addAttribute("mensagem", c));
         
         return new ModelAndView("cadastraTipo");
     }
 
     @PostMapping("/cadastraTipo")
     public ModelAndView salvarMensagem(@RequestParam Map<String, String> params, ModelMap model, HttpSession session) {
-        //if (session.getAttribute("admin") == null) { return new ModelAndView("redirect:/login"); }
         String saida = "";
         String erro = "";
     	
         String conteudo = params.get("conteudo");
         String idTime = params.get("timeId");
+        String button = params.get("button");
+        
+        System.out.println(button);
         
         Curiosidade curiosidade = new Curiosidade();
-        
-        curiosidade.setAdministrador(administradorRep.getById(1l));
-        curiosidade.setConteudo(conteudo);
-        curiosidade.setTime(timeRep.getById(Long.parseLong(idTime)));
-        
+        List<Curiosidade> curiosidades = new LinkedList<>();
         
         try {
-            curiosidadeRep.save(curiosidade);
-            saida = "Curiosidade adicionada com sucesso!";
+        	if(button.equals("Filtrar")) {
+        		curiosidades = curiosidadeRep.buscarPorCodigoDoTime(Long.parseLong(idTime));
+        	} else if(button.equals("Salvar")) {
+                curiosidade.setAdministrador(administradorRep.findByCodigo(1));
+                curiosidade.setConteudo(conteudo);
+                curiosidade.setTime(timeRep.findByCodigo(Long.parseLong(idTime)));
+                curiosidadeRep.save(curiosidade);
+                saida = "Curiosidade adicionada com sucesso!";
+                curiosidades = curiosidadeRep.findAll();
+        	}
         } catch (Exception e) {
         	erro = e.getMessage();
-            // ... Tratamento de erro ...
         }
         
-        System.out.println(saida + " " + erro);
+        model.addAttribute("listaMensagens", curiosidades);
     	model.addAttribute("erro", erro);
     	model.addAttribute("saida", saida);
+    	model.addAttribute("times", timeRep.findAll());
         
         return new ModelAndView("cadastraTipo");
     }

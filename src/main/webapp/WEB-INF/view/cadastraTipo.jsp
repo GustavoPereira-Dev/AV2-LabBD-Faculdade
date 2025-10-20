@@ -3,14 +3,10 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<c:set var="tituloPagina" value="Admin - Mensagens" scope="request"/>
+	<c:set var="tituloPagina" value="Admin - Curiosidade" scope="request"/>
+	<c:set var="imagem" value="curiosity.png" scope="request"/>
 	<jsp:include page="header.jsp" />
-	
+<body>
 	<div class="container main-container">
 	    <h2 class="mb-4">Gerenciamento das mensagens</h2>
 	
@@ -35,7 +31,7 @@
 		                     	</select>
 
 	                        </div>
-	                        <button type="submit" class="btn btn-primary">Salvar</button>
+	                        <input type="submit" id="button" name="button" value="Salvar" class="btn btn-primary"/>
 	                    </form>
 	                </div>
 	            </div>
@@ -52,6 +48,18 @@
 	        </div>
 	
 	        <div class="col-md-8">
+	        	<form action="${pageContext.request.contextPath}/cadastraTipo" method="post">
+	        		<div class="mb-3">
+						<label for="time" class="form-label">Filtragem</label>
+			         	<select class="form-select" id="time" name="timeId" required>
+			          		<option selected disabled value="">Selecione um time...</option>
+			          		<c:forEach var="time" items="${times}">
+			                   	<option value="${time.codigo}">${time.nome}</option>
+			                 </c:forEach>
+			        	</select>			
+			       </div>
+			       <input type="submit" id="button" name="button" value="Filtrar" class="btn btn-primary"/>	
+	        	</form>
 	            <h4>Mensagens Cadastradas</h4>
 	            <table class="table table-striped table-hover">
 	                <thead>

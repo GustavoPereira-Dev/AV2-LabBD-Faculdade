@@ -2,9 +2,11 @@ package com.example.fateczl.AvaliacaoFaculdadeAV2;
 
 import com.example.fateczl.AvaliacaoFaculdadeAV2.model.Administrador;
 import com.example.fateczl.AvaliacaoFaculdadeAV2.model.Curiosidade;
+import com.example.fateczl.AvaliacaoFaculdadeAV2.model.Curso;
 import com.example.fateczl.AvaliacaoFaculdadeAV2.model.Time;
 import com.example.fateczl.AvaliacaoFaculdadeAV2.repository.IAdministradorRepository;
 import com.example.fateczl.AvaliacaoFaculdadeAV2.repository.ICuriosidadeRepository;
+import com.example.fateczl.AvaliacaoFaculdadeAV2.repository.ICursoRepository;
 import com.example.fateczl.AvaliacaoFaculdadeAV2.repository.ITimeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +23,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 @SpringBootApplication
-public class AvaliacaoFaculdadeAv2Application implements CommandLineRunner { // Implementa CommandLineRunner
+public class AvaliacaoFaculdadeAv2Application implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(AvaliacaoFaculdadeAv2Application.class);
 
@@ -29,6 +31,9 @@ public class AvaliacaoFaculdadeAv2Application implements CommandLineRunner { // 
     @Autowired
     private ICuriosidadeRepository curiosidadeRep;
 
+    @Autowired
+    private ICursoRepository cursoRep;
+    
     @Autowired
     private ITimeRepository timeRep;
 
@@ -39,17 +44,15 @@ public class AvaliacaoFaculdadeAv2Application implements CommandLineRunner { // 
         SpringApplication.run(AvaliacaoFaculdadeAv2Application.class, args);
     }
 
-    /**
-     * Este método será executado automaticamente na inicialização da aplicação,
-     * pois a classe implementa CommandLineRunner.
-     */
     @Override
     public void run(String... args) throws Exception {
         logger.info("=====================================================");
         logger.info("INICIANDO VERIFICAÇÃO DE DADOS NA BASE...");
 
+        if(!cursoRep.findAll().isEmpty()) abastecerCursos();
+        
         if (curiosidadeRep.verificaCuriosidades()) {
-            logger.info("Base de dados já populada. Nenhuma ação necessária.");
+        	logger.info("Base de dados já populada. Nenhuma ação necessária.");
             logger.info("=====================================================");
             return;
         }
@@ -95,6 +98,7 @@ public class AvaliacaoFaculdadeAv2Application implements CommandLineRunner { // 
 
             curiosidadeRep.saveAll(curiosidadesParaSalvar);
             logger.info("-> {} curiosidades carregadas com sucesso no total!", curiosidadesParaSalvar.size());
+            
             logger.info("CARGA DE DADOS INICIAIS CONCLUÍDA!");
 
         } catch (Exception e) {
@@ -104,4 +108,26 @@ public class AvaliacaoFaculdadeAv2Application implements CommandLineRunner { // 
             logger.info("=====================================================");
         }
     }
+    
+    public void abastecerCursos() {
+    	logger.info("TABELA CURSO SEM DADOS, ABASTECENDO-A AGORA...");
+    	
+    	 try {
+	        String[] cursos = {"Analise e Desenvolvimento de Sistemas", "Comercio Exterior", "Desenvolvimento de Produtos Plasticos", "Desenvolvimento de Software Multiplataforma", "Gestao de Recursos Humanos", "Gestao Empressarial", "Polimeros", "Logistica", "AMS"};
+	        for(int i = 0; i < cursos.length; i++) {
+	          	Curso curso = new Curso();
+	          	curso.setCodigo(i + 1);
+	          	curso.setNome(cursos[i]);
+	          	cursoRep.save(curso);
+	        } 
+	        logger.info("   - Carregadas {} curiosidades para o time {}", cursos.length);
+    	 }  catch (Exception e) {
+	            logger.error("!!! ERRO CRÍTICO DURANTE A CARGA DE DADOS INICIAIS NO CURSO !!!");
+	            logger.error("Mensagem: {}", e.getMessage());
+	        } finally {
+	            logger.info("=====================================================");
+	        }
+	    
+    } 
+    
 }
