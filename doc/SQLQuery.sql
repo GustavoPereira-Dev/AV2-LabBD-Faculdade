@@ -114,10 +114,6 @@ AS
 -- Você deve passar um valor (0 ou 1), mesmo que ele não seja usado
 SELECT dbo.fn_verifica_curiosidades() AS bit;
 
-SELECT * FROM Candidato;
-SELECT * FROM Curiosidade
-SELECT * FROM Times;
-DELETE FROM Curiosidade;
 -- Quando um aluno selecionar o time, deve-se fazer
 --uma escolha aleatória para a tabela do time. Como o número de mensagens iniciais
 --é pequeno, deve-se ter uma forma de registrar as 3 últimas ocorrências, para que
@@ -137,10 +133,6 @@ AS
 	ELSE
 		RAISERROR('Admin ou senha incorreta', 16, 1)
 GO
-
-DECLARE @saida varchar(100)
-EXEC sp_login_admin 'admin', 'Jej-W+q%', @saida OUTPUT
-PRINT(@saida)
 
 CREATE FUNCTION fn_sortear_curiosidade_id (@codigo_time INT)
 RETURNS TABLE
@@ -247,7 +239,6 @@ CREATE ALTER PROCEDURE sp_inserir_candidato (@nome VARCHAR(100), @email VARCHAR(
 	SET @saida = 'Candidato adicionado com sucesso.'
 
 GO
--- DISABLE TRIGGER t_deletar_atualizar_candidato ON Candidato
 
 CREATE TRIGGER t_deletar_atualizar_candidato ON Candidato
 FOR DELETE, UPDATE
@@ -285,5 +276,3 @@ AS
 		RAISERROR('Não é permitido excluir ou modificar curiosidades cadastradas no sistema.', 16, 1)
 		ROLLBACK TRANSACTION
 	END
-
--- DISABLE TRIGGER t_deletar_atualizar_curiosidade ON Curiosidade

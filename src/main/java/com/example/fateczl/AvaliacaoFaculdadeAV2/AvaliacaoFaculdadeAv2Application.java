@@ -27,7 +27,6 @@ public class AvaliacaoFaculdadeAv2Application implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(AvaliacaoFaculdadeAv2Application.class);
 
-    // Injeção de dependências diretamente na classe principal
     @Autowired
     private ICuriosidadeRepository curiosidadeRep;
 
